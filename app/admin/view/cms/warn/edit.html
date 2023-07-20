@@ -1,0 +1,79 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" class="layui-input"  placeholder="请输入标题" value="{$row.title|default=''}">
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">平台</label>
+            <div class="layui-input-block">
+                <input type="text" name="plateform" class="layui-input"  placeholder="请输入平台" value="{$row.plateform|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">发布时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="pub_time" data-date="" data-date-type="datetime" class="layui-input"  placeholder="发布时间" value="{$row.pub_time|default=''}">
+            </div>
+        </div>
+         <div class="layui-form-item">
+            <label class="layui-form-label">反馈审核</label>
+            <div class="layui-input-block">
+                <select name="isread">
+                    <option value="0"{if $row.isread==0}selected{/if}>未处理</option>
+                    <option value="1"{if $row.isread==1}selected{/if}>已处理</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">logo</label>
+            <div class="layui-input-block layuimini-upload">
+                <input name="logo" class="layui-input layui-col-xs6"   placeholder="请上传logo" value="{$row.logo|default=''}">
+                <div class="layuimini-upload-btn">
+                    <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                    <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">小logo</label>
+            <div class="layui-input-block layuimini-upload">
+                <input name="min_logo" class="layui-input layui-col-xs6"   placeholder="请上传logo" value="{$row.min_logo|default=''}">
+                <div class="layuimini-upload-btn">
+                    <span><a class="layui-btn" data-upload="min_logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                    <span><a class="layui-btn layui-btn-normal" id="select_min_logo" data-upload-select="min_logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <textarea name="content" rows="20" class="layui-textarea editor" 描述 placeholder="请输入描述">{$row.content|raw|default=''}</textarea>
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">后续报道</label>
+            <div class="layui-input-block">
+                <textarea name="report" rows="35" class="layui-textarea editor">{$row.report|raw}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">总结</label>
+            <div class="layui-input-block">
+                
+                <textarea name="summary" rows="35" class="layui-textarea editor">{$row.summary|raw}</textarea>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>

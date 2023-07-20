@@ -1,0 +1,185 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="keywords" content="{$data.keywords}">
+<meta name="description" content="{$data.description}">
+<title>{$data.title}</title>
+{include file="public/include"}
+</head>
+<body>
+    <div id="app"><header class="navigation" style=""><i class="cubeic-back" style="display: none;"></i> <h1>{$data.name}</h1> <input placeholder="请输入平台名称" class="search-box" style="display: none;"> <div class="search-btn" style="display: none;">搜索</div> <i class="cubeic-search" style="display: none;"></i></header> 
+    <div class="exposure-page my-router" style="animation-duration: 0s;">
+        <div class="submit-form">
+            <form action="" id="warn-form" class="form-div" method="post" accept-charset="utf-8">
+	        <div class="warn-form">
+                <span class="warn-form-label">曝光网址:</span>
+                <input class="warn-form-input" type="text" name="website" id="website" />
+                <span class="error-msg2"></span>
+                <span class="warn-form-label">曝光平台:</span>
+                <input class="warn-form-input" type="text" name="name" id="name"/>
+                <span class="error-msg2"></span>
+	        </div>
+	        <div class="warn-form">
+	          
+                <div class="warn-form-label">曝光理由:</div>	    
+                <input type="text" class="warn-form-input" name="reason" id="reason"/>
+                <span class="error-msg2"></span>
+                <div class="warn-form-label">事件描述:</div>
+                <textarea class="ley-textarea" name="description" id="description"></textarea>
+                <span class="error-msg2"></span>
+	        </div>
+            <input type="submit" class="ley-input ley-radius ley-submit" id="warnbtn" value="提交" />
+            
+	    </form>
+        </div>
+        
+        
+        
+        <div class="cube-scroll-wrapper my-scroll-wrapper" style="height: 852px;margin-top:0px">
+        <div class="cube-scroll-content">
+        <div class="cube-scroll-list-wrapper"> 
+            <ul class="post-box">
+         {Cshuo:warn num="15" paging="yes" id="vo"}
+        <li class="exposure-item border-bottom-1px border-top-1px">
+            <div class="exposure-title"><a href="/{$data.urls}/{$vo.id}.html">{$vo.title|default=''}</a></div> <div class="exposure-date">{$vo.pub_time|default=""}</div> <div class="exposure-other"><i class="cubeic-eye-visible"></i>{$vo.num}
+	        </div>
+	        </li>
+         {/Cshuo:warn}
+       </ul>
+       </div> 
+        </div> 
+        
+        <div class="cube-pulldown">
+            <div class="cube-pulldown-wrapper">
+                <div class="before-trigger" style="">
+                     {if $__PAGING__.record_total > 0}  
+        {if $__PAGING__.page_total > 1}  
+            {if $__PAGING__.page_current > 1}
+                <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_prev}" class="page">上一页</a>
+            {/if}
+            
+            {if $__PAGING__.page_current < $__PAGING__.page_total}
+            <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_next}" class="page">下一页</a> 
+            {/if}
+        {/if}
+        {/if}
+                </div> 
+            </div>
+        </div>
+        </div>
+    </div> 
+    
+    {include file="public/navs"}
+</div>
+<script src="/static/pc/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    
+     $("#warnbtn").click(function(event){
+        event.preventDefault();
+        var website = $("#website");
+        var name = $("#name");
+        var reason = $("#reason");
+        var description = $("#description");
+        if (!website.val().trim()) {
+			website.next().text('平台网址不能为空');
+			return false;
+            
+        } else  if (!(/^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*$/.test(website.val()))) {
+			website.next().text('网址格式错误');
+			return false;
+            
+        } else if (!name.val().trim()) {
+			name.next().text('平台名称不能为空');
+			return false;
+            
+        }else if (!reason.val().trim()) {
+			reason.next().text('曝光理由不能为空');
+			return false;
+            
+        }else if (!description.val().trim()) {
+			description.next().text('描述不能为空');
+			return false;
+            
+        }
+        
+        
+        $.ajax({
+			type: 'post',
+			url: "/feedback/warn",
+			data: $('#warn-form').serialize(),
+			async: false,
+			success (ret) {
+			    
+				alert("提交成功");
+				website.val('');
+				name.val('');
+				description.val('');
+				reason.val('');
+				
+			},
+			error(ret){
+				var errors = ret.responseJSON.errors
+				var errorMsg = ''
+				for (var key in errors) {
+					if (errors.hasOwnProperty(key)) {
+						var element = errors[key];
+						errorMsg += element[0] + '<br \><br \>'
+					}
+				}
+				// $(this).leyAlert({
+				// 	type: 'error',
+				// 	content: errorMsg
+				// });
+			}
+		});
+
+		return false;
+    });
+</script>
+<style type="text/css" media="all">
+.submit-form{
+    padding-bottom:10px;
+    background: #f5f5f5;
+}
+.form-div{
+    background: #fff;
+    padding-bottom: 10px;
+}
+    .warn-form{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+    .warn-form-input{
+        border: 1px solid #2577e3;
+        margin: 5px 0px;
+        border-radius: 6px;
+        height: 30px;
+        font-size: 16px;
+    }
+    .ley-textarea{
+        border: 1px solid #2577e3;
+        width: 100%;
+        border-radius: 6px;
+        margin: 5px 0px;
+        height: 80px;
+        overflow: scroll;
+        font-size: 16px;
+    }
+    .error-msg2{
+        color: red;
+        margin: 5px;
+    }
+    #warnbtn{
+        text-align: center;
+        width: 50%;
+        margin-left: 25%;
+        background: #2577e3;
+        padding: 5px 0px;
+        border-radius: 6px;
+        color: #fff;
+    }
+</style>
+</body>
+</html>

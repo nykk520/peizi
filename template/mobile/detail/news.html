@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="keywords" content="{$data.keywords}">
+<meta name="description" content="{$data.description}">
+<title>{$data.title}</title>
+{include file="public/include"}
+</head>
+<body>
+   
+   <div id="app">
+	<header class="navigation"><i class="cubeic-back" style="" id="goBack"></i>
+		<h1>{$data.title}</h1> <input placeholder="请输入平台名称" class="search-box"
+			style="display: none;">
+		<div class="search-btn" style="display: none;">搜索</div> <i class="cubeic-search" style="display: none;"></i>
+	</header>
+	<div class="my-router" style="animation-duration: 0s;">
+		<div class="cube-scroll-wrapper my-scroll-wrapper" style="height: 852px;">
+			<div class="cube-scroll-content">
+				<div class="cube-scroll-list-wrapper" style="min-height: 853px;">
+					<div class="create-box">
+					    <div class="news-title">
+					        {$data.title}
+					    </div>
+					    <div class="news-desc">
+					        <span> 发布时间：{$data.pub_time|default=''}</span>
+					        <span>阅读数：{$data.num}</span>
+					        
+					    </div>
+						<div class="paragraph">
+				    	    {$data.content|default=''|raw|html_entity_decode}
+						</div>
+						
+				</div>
+				
+			</div>
+			<!---->
+		</div>
+		
+		{include file="public/navs"}
+	</div>
+	
+   
+ <script type="text/javascript" charset="utf-8">
+    var goBack = document.getElementById("goBack");
+    
+goBack.addEventListener("click",function(){
+    window.history.back();
+})
+</script>  
+    
+
+
+</body>
+</html>

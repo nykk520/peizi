@@ -1,0 +1,29 @@
+<!-- 网站底部 -->
+<div class="ley-qrcode">
+  <div class="ley-inner">
+    <div class="company-msg">
+      <div class="company-email">邮箱：{:get_config('web_email')}</div>
+      <script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
+      <div class="company-tel">客服SKYPE：<a style="color: #9ba5b4" href="{:get_config('web_skype_cid')}">{:get_config('web_skype')}</a></div>
+    </div>
+  </div>
+</div>
+<div class="ley-copyright">
+  <div class="ley-inner">
+    <div class="footer-statement">
+        {:html_entity_decode(get_config('web_footer'))}
+    </div>
+    <div class="pz-copyright">{:get_config('web_copyright')}</div>
+  </div>
+</div>
+
+<!-- 返回顶部 -->
+<div class="ley-sidebar">
+  
+  <ul>
+    <li class="gotop" id="gotop" > <a href="javascript:;">返回顶部<span class="popup"><i></i>返回顶部</span></a> </li>
+  </ul>
+</div>
+<script src="/static/pc/js/jquery.min.js"></script> 
+<script src="/static/pc/js/ley.js"></script> 
+<script src="/static/pc/js/common.js"></script>

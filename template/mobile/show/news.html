@@ -1,0 +1,49 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="keywords" content="{$data.keywords}">
+<meta name="description" content="{$data.description}">
+<title>{$data.title}</title>
+{include file="public/include"}
+</head>
+<body>
+    <div id="app"><header class="navigation" style=""><i class="cubeic-back" style="display: none;"></i> <h1>{$data.name}</h1> <input placeholder="请输入平台名称" class="search-box" style="display: none;"> <div class="search-btn" style="display: none;">搜索</div> <i class="cubeic-search" style="display: none;"></i></header> 
+    <div class="exposure-page my-router" style="animation-duration: 0s;">
+        <div class="cube-scroll-wrapper my-scroll-wrapper" style="height: 852px;margin-top:0px">
+        <div class="cube-scroll-content">
+        <div class="cube-scroll-list-wrapper">
+            <ul class="post-box">
+         {Cshuo:news num="15"  paging="yes" id="vo"}  
+        <li class="exposure-item border-bottom-1px border-top-1px">
+            <div class="exposure-title"><a href="/{$data.urls}/{$vo.id}.html">{$vo.title|default=''}</a></div> <div class="exposure-date">{$vo.pub_time|default=""}</div> <div class="exposure-other"><i class="cubeic-eye-visible"></i>{$vo.num}
+	        </div>
+	        </li>
+         {/Cshuo:news}
+       </ul>
+       </div> 
+        </div> 
+        <div class="cube-pulldown">
+            <div class="cube-pulldown-wrapper">
+                <div class="before-trigger" style="">
+                     {if $__PAGING__.record_total > 0}  
+        {if $__PAGING__.page_total > 1}  
+            {if $__PAGING__.page_current > 1}
+                <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_prev}" class="page">上一页</a>
+            {/if}
+            
+            {if $__PAGING__.page_current < $__PAGING__.page_total}
+            <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_next}" class="page">下一页</a> 
+            {/if}
+        {/if}
+        {/if}
+                </div> 
+            </div>
+        </div>
+        </div>
+    </div> 
+    
+    {include file="public/navs"}
+</div>
+</body>
+</html>

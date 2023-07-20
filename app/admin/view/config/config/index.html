@@ -1,0 +1,74 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+    <div class="layuimini-main" id="app">
+
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                {volist name="group" id="vo"}
+                 <li>{$vo.name}</li>
+                {/volist}
+            </ul>
+            <div class="layui-tab-content">
+                {volist name="group" id="vo" key="k"}
+                 <div class="layui-tab-item {if $k==1}layui-show{/if}">
+                    {volist name="list" id="v"}
+                        {if $vo.id == $v.groupid}
+                            {volist name="attr" id="a"}
+                                {if $v.type == $a.id}
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$v.title}</label>
+                                    {switch $a.value }
+                                        {case radio}
+                                            <div class="layui-input-block">
+                                                {volist name=":get_item($v['content'])" id="r" key="rk"}
+                                                    <input type="radio" name="{$v.name}" {if $v['value'] == $rk}checked=""{/if} value="{$rk}" title="{$r}">
+                                                {/volist}
+                                            </div>
+                                        {/case}
+                                        {case textarea}
+                                            <div class="layui-input-block">
+                                                <textarea name="{$v.name}" rows="20" class="layui-textarea editor" placeholder="请输入{$v.title}">{$v.value|raw|default=''}</textarea>
+                                            </div>
+                                        {/case}
+                                        {case img}
+                                                <div class="layui-input-block layuimini-upload">
+                                                    <input name="{$v.name}" id="{$v.name}" class="layui-input layui-col-xs6"  placeholder="请上传{$v.title}" value="{$v.value}">
+                                                    <div class="layuimini-upload-btn">
+                                                        <span><a class="layui-btn" data-upload-id="{$v.name}" data-upload="{$v.name}" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg|gif" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                                                        <span><a class="layui-btn layui-btn-normal"  data-upload-id="{$v.name}" id="select_{$v.name}" data-upload-select="{$v.name}" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                                                    </div>
+                                                </div>
+                                        {/case}
+                                        {case tpl}
+                                            <div class="layui-input-block">
+                                                <select name="{$v.name}">
+                                                   {volist name="template" id="t"}
+                                                     <option {if $v.value== $t}selected{/if} value="{$t}">{$t}</option>
+                                                   {/volist}
+                                                </select>
+                                            </div>
+                                        {/case}
+                                        {default /}
+                                            <div class="layui-input-block">
+                                                <input type="text" name="{$v.name}" class="layui-input"  placeholder="请输入{$v.title}" value="{$v.value}">
+                                            </div>
+                                    {/switch}
+                                     </div>
+                                {/if}
+                            {/volist}
+                        {/if}
+                    {/volist}
+                </div>
+                {/volist}
+            </div>
+            <div class="hr-line"></div>
+            <div class="layui-form-item text-center">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+            </div>
+
+        </div>
+
+    </div>
+    </form>
+</div>

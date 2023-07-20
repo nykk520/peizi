@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+
+	<meta name="keywords"
+		content="{$data.title}{$data.website},{:get_status($data.pstatus)},配资指数数据-{:get_config('web_domain')},配资平台数据,配资平台数据,最真实的配资评论">
+	<meta name="description"
+		content="{$data.title}{$data.website}配资指数详情页,配资指数,{:get_config('web_domain')},配资平台数据,最真实的配资评论">
+	<title>{$data.title} {$data.website} {:get_status($data.pstatus)} 配资指数数据-{:get_config('web_domain')},最真实的配资评论
+	</title>
+	{include file="public/include"}
+</head>
+
+<body>
+	<div id="app">
+		<header class="navigation"><i class="cubeic-back" id="goBack"></i>
+			<h1>信汇网</h1>
+		</header>
+
+		<div class="create-box" style=" padding-bottom:100px;">
+			<div class="modular">综合信息</div>
+			<h5 style="margin-top: 10px;">平台信息</h5>
+			<p class="paragraph">平台名称： {$data.title}<br>
+				平台网址： {$data.website}<br>
+				其他网址： {$data.other_website}<br>
+				主营业务： {$data.main_business}<br>
+				所在地区： {$data.province}/{$data.city}<br>
+				办公地址： {$data.office_address}<br>
+				上线时间： {$data.launch_date}<br>
+				客服热线： {$data.customer_service}</p>
+			<h5>工商信息</h5>
+			<p class="paragraph">公司名称： {$data.company_name}<br>
+				信用代码： {$data.credit_code}<br>
+				经营状态： {$data.operating_status}<br>
+				法人代表： {$data.legal_representative}<br>
+				公司类型： {$data.company_type}<br>
+				成立日期： {$data.establishment_date}<br>
+				注册资本： {$data.registered_capital}<br>
+				注册地址：{$data.registered_address} </p>
+			<h5>备案信息</h5>
+			<p class="paragraph">主办单位名称：{$data.organizer_name}<br>
+				网站名称： {$data.website_name}<br>
+				网站域名： {$data.domain_name}<br>
+				网站备案: {$data.website_record}<br>
+				主办单位性质： {$data.organizer_type}<br>
+				网站首页地址：{$data.homepage_address}<br>
+				网站负责人： {$data.website_manager}<br>
+				审核时间： {$data.review_date}</p>
+			<div class="modular">平台简介 <img src="/static/mobile/img/chuo_{$data.pstatus}.png" alt="" class="chuo-img">
+				<div class="chuo pstatus{$data.pstatus}">{:get_status($data.pstatus)}</div>
+			</div>
+			<div class="paragraph">{$data.description|raw|html_entity_decode}</div>
+			<div class="modular experience" style="">融资信息 </div>
+			<div class="paragraph">{$data.financing_information|default=''|raw|html_entity_decode}</div>
+			{if $data.summarize}
+			<div class="modular experience" style="">总结 </div>
+			<div class="paragraph">{$data.summarize|default=''|raw|html_entity_decode}</div>
+			{/if}
+		</div>
+
+
+    {include file="public/navs"}
+
+
+	</div>
+
+<script type="text/javascript" charset="utf-8">
+    var goBack = document.getElementById("goBack");
+    
+goBack.addEventListener("click",function(){
+    window.history.back();
+})
+</script>
+
+<style type="text/css" media="all">
+    .pstatus1{
+        color: rgb(97, 150, 223);
+    }
+    .pstatus2{
+        color: rgb(255, 133, 71);
+    }
+    .pstatus3{
+        color: rgb(255, 172, 56);
+    }
+    .pstatus4{
+        color: rgb(245, 69, 69);
+    }
+</style>
+</body>
+
+</html>

@@ -1,0 +1,301 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="keywords" content="{$data.keywords}">
+<meta name="description" content="{$data.description}">
+<title>{$data.title}</title>
+{include file="public/include"}
+</head>
+<body>
+<div id="app">
+<header class="navigation">
+    <h1>{$data.name}</h1>
+ </header>
+  <div class="ranking-page" style="animation-duration: 0s;">
+    <div class="cube-scroll-wrapper my-scroll-wrapper">
+      <div class="cube-scroll-content">
+        <div class="cube-scroll-list-wrapper" style="min-height: 801px;">
+          <div class="filter-bar border-top-1px border-bottom-1px">
+            <div class="cube-select filter-bar-item"><span class="cube-select-placeholder" id="regionButton">地区</span> <i class="cube-select-icon"></i></div>
+            <div class="cube-select filter-bar-item"><span class="cube-select-placeholder"  id="timeButton">时间</span> <i class="cube-select-icon"></i></div>
+            <div class="cube-select filter-bar-item"><span class="cube-select-placeholder" id="statusButton">状态</span> <i class="cube-select-icon"></i></div>
+          </div>
+          <ul class="post-box">
+           {Cshuo:plateform num="15" field="id,title,website,min_logo,province,city,class,safe,cost,launch_date,pstatus"  province="'.$province.'" pstatus="'.$status.'" paging="yes" wd="'.$wd.'"}
+            <li class="platform-item border-bottom-1px">
+              <div class="platform-name"><a href="/{$data.urls}/{$vo.id}.html" style="color: #275592;">{$vo.title|default=''}</a></div>
+              <div class="platform-site"><a href="/link.php?url={$vo.website|default=''}" style="color: #343a41;">{$vo.website|default=''}</a></div>
+              <ul class="platform-msg">
+                <li>{if $vo.class == 1}股票{else /}期货{/if}</li>
+                {if $vo.cost}
+                <li>{$vo.cost}</li>
+                {/if}
+                {if $vo.province}
+                <li>{$vo.province|default=''}/{$vo.city|default=''}</li>
+                {/if}
+              </ul>
+              <div class="platform-picture"><a href="/{$data.urls}/{$vo.id}.html"><img src="{$vo.min_logo|default=''}" alt=""></a></div>
+              <!---->
+              <div class="score special-score status{$vo.pstatus}" >{:get_status($vo.pstatus)}</div>
+              <div class="label"></div>
+            </li>
+             {/Cshuo:plateform}
+          
+           
+          </ul>
+          <div class="cube-pulldown">
+            <div class="cube-pulldown-wrapper">
+                <div class="before-trigger page-list" style="">
+                     {if $__PAGING__.record_total > 0}  
+        {if $__PAGING__.page_total > 1}  
+            {if $__PAGING__.page_current > 1}
+                <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_prev}" class="page">上一页</a>
+            {/if}
+            
+            {if $__PAGING__.page_current < $__PAGING__.page_total}
+            <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_next}" class="page">下一页</a> 
+            {/if}
+        {/if}
+        {/if}
+                </div> 
+            </div>
+        </div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <!---->
+{include file="public/navs"}
+</div>
+<div class="cube-popup cube-popup_mask cube-picker" id="regionPopup" style="z-index: 100;display:none">
+  <div class="cube-popup-mask"></div>
+  <div class="cube-popup-container">
+    <div class="cube-popup-content">
+      <div class="cube-picker-panel cube-safe-area-pb" >
+        <div class="cube-picker-choose border-bottom-1px"><span class="cube-picker-cancel" id="cancel-area">取消</span> <span class="cube-picker-confirm" id="submit-area">确定</span>
+          <div class="cube-picker-title-group">
+            <h1 class="cube-picker-title">所在地区</h1>
+            <!----></div>
+        </div>
+        <div class="cube-picker-content"><i class="border-bottom-1px"></i> <i class="border-top-1px"></i>
+          <div class="cube-picker-wheel-wrapper">
+            <div>
+              <ul class="cube-picker-wheel-scroll" id="regionList">
+                <li class="cube-picker-wheel-item" data-url="{:make_show_url('',$status)}">全部</li>
+                {Cshuo:province id="vo" key="key"}
+                    <li class="cube-picker-wheel-item" data-url="{:make_show_url($vo['name'],$status)}">{$vo.name}</li>
+                {/Cshuo:province}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="cube-picker-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cube-popup cube-popup_mask cube-picker" id="timePicker" style="z-index: 100;display:none;"><div class="cube-popup-mask"></div> <div class="cube-popup-container"><div class="cube-popup-content"><div class="cube-picker-panel cube-safe-area-pb" style=""><div class="cube-picker-choose border-bottom-1px"><span class="cube-picker-cancel timeCancel" >取消</span> <span class="cube-picker-confirm timeCancel2">确定</span> <div class="cube-picker-title-group"><h1 class="cube-picker-title">成立时间</h1> <!----></div></div> <div class="cube-picker-content"><i class="border-bottom-1px"></i> <i class="border-top-1px"></i> <div class="cube-picker-wheel-wrapper"><div><ul class="cube-picker-wheel-scroll" style="transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: translate(0px, -36px) scale(1) translateZ(0px);"><li class="cube-picker-wheel-item" style="pointer-events: auto; transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(-25deg);">全部</li><li class="cube-picker-wheel-item" style="pointer-events: auto; transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); transition-duration: 0ms; transform: rotateX(0deg);"></li></ul></div></div></div> <div class="cube-picker-footer"></div></div></div></div></div>
+
+
+<div class="cube-popup cube-popup_mask cube-picker" id="statusPicker" style="z-index: 100;display:none;"><div class="cube-popup-mask"></div> <div class="cube-popup-container"><div class="cube-popup-content"><div class="cube-picker-panel cube-safe-area-pb" style=""><div class="cube-picker-choose border-bottom-1px"><span class="cube-picker-cancel" id="statusCancel">取消</span> <span class="cube-picker-confirm" id="statusSubmit">确定</span> <div class="cube-picker-title-group"><h1 class="cube-picker-title">经营状态</h1> <!----></div></div> 
+<div class="cube-picker-content">
+    <i class="border-bottom-1px"></i> <i class="border-top-1px"></i> 
+    <div class="cube-picker-wheel-wrapper">
+        <div>
+            <ul class="cube-picker-wheel-scroll" id="statusList">
+                <li class="cube-picker-wheel-item" data-url="{:make_show_url($province,'')}">全部</li>
+                {Cshuo:pstatus id="vo" key="key"}
+                <li class="cube-picker-wheel-item"data-url="{:make_show_url($province,$vo.status)}">{$vo.name}</li>
+                 {/Cshuo:pstatus}
+               
+            </ul>
+        </div>
+    </div>
+</div> 
+<div class="cube-picker-footer"></div></div></div></div>
+</div>
+<script type="text/javascript" charset="utf-8">
+var regionPopup = document.getElementById("regionPopup");
+var regionList = document.getElementById("regionList");
+var liElements = regionList.querySelectorAll("li");
+var submit1 = document.getElementById("submit-area");
+var cancel1 = document.getElementById("cancel-area");
+var timeButton = document.getElementById("timeButton");
+var timePicker = document.getElementById("timePicker");
+var timeCancel = document.querySelector(".timeCancel");
+var timeCancel2 = document.querySelector(".timeCancel2");
+var statusButton = document.getElementById("statusButton");
+var statusPicker = document.getElementById("statusPicker");
+var statusCancel = document.getElementById("statusCancel");
+var statusSubmit = document.getElementById("statusSubmit");
+var statusList = document.getElementById("statusList");
+var statusElements = statusList.querySelectorAll("li");
+var selectArea = '';
+var selectStatus = '';
+var touchstartY = 0;
+var touchendY = 0;
+var start = 0;
+
+timeButton.addEventListener("click",function(){
+    timePicker.style.display = "block";
+})
+timeCancel.addEventListener("click",function(){
+   timePicker.style.display = "none"; 
+});
+timeCancel2.addEventListener("click",function(){
+    timePicker.style.display = "none"; 
+})
+
+statusButton.addEventListener("click",function(){
+    statusPicker.style.display = "block"; 
+    handleSwipeStatus();
+     disableScroll();
+})
+document.getElementById("regionButton").addEventListener("click", function() {
+  regionPopup.style.display = "block";
+  handleSwipe();
+  disableScroll();
+});
+ document.addEventListener("click", function(event) {
+  if (!regionPopup.contains(event.target) && event.target !== document.getElementById("regionButton")) {
+    regionPopup.style.display = "none";
+  } 
+});
+
+statusCancel.addEventListener("click",function(){
+    statusPicker.style.display = "none"; 
+    touchstartY = 0;
+    touchendY = 0;
+    start = 0;
+    handleSwipeStatus();
+    enableScroll();
+})
+statusSubmit.addEventListener("click",function(){
+    window.location.href = selectStatus.getAttribute("data-url");
+    touchendY = 0;
+    start = 0;
+    handleSwipeStatus();
+    enableScroll();
+    
+})
+ statusList.addEventListener("touchstart", function(event) {
+  touchstartY = event.touches[0].clientY;
+ 
+});
+ statusList.addEventListener("touchend", function(event) {
+  touchendY = event.changedTouches[0].clientY;
+  handleSwipeStatus();
+});
+
+cancel1.addEventListener("click",function(e){
+    regionPopup.style.display = "none";
+    touchstartY = 0;
+    touchendY = 0;
+    start = 0;
+    handleSwipe();
+    enableScroll();
+})
+submit1.addEventListener("click",function(e){
+    window.location.href = selectArea.getAttribute("data-url");
+    touchendY = 0;
+    start = 0;
+    handleSwipe();
+    enableScroll();
+})
+
+ regionList.addEventListener("touchstart", function(event) {
+  touchstartY = event.touches[0].clientY;
+});
+ regionList.addEventListener("touchend", function(event) {
+  touchendY = event.changedTouches[0].clientY;
+  handleSwipe();
+});
+var pxValue = remToPx(2.25);
+
+
+function handleSwipeStatus(){
+    var maxHeight = statusList.offsetHeight;
+    var dis = touchstartY-touchendY;
+    start = start - dis;
+    console.log(start)
+    if(start > 0 ){
+        start = 0;
+    }else if(Math.abs(start) > maxHeight){
+        start = 0-maxHeight
+    }
+    start = makeStartMultipleOfI(start,pxValue)
+    
+    var current = Math.abs(start / pxValue);
+    statusElements.forEach((item,index)=>{
+        item.style.transitionDuration = "1500ms"
+        var de =  (current - index ) * 25
+        item.style.transform = `rotateX(${de}deg)`
+        if(current == index){
+            selectStatus = item;
+        }
+       
+    })
+    statusList.style.transitionDuration = "1500ms";
+    statusList.style.transform = `translateY(${start}px) scale(1) translateZ(0px)`;
+    statusList.style.pointerEvents = "auto";
+    statusList.style.transitionTimingFunction = "cubic-bezier(0.23, 1, 0.32, 1)";
+    setTimeout(function() {
+        statusList.style.transitionDuration = "0ms";
+    }, 1500);
+}
+
+ function handleSwipe() {
+    var maxHeight = regionList.offsetHeight;
+    var dis = touchstartY-touchendY;
+    start = start - dis;
+    
+    if(start > 0 ){
+        start = 0;
+    }else if(Math.abs(start) > maxHeight){
+        start = 0-maxHeight
+    }
+    start = makeStartMultipleOfI(start,pxValue)
+    
+    var current = Math.abs(start / pxValue);
+    liElements.forEach((item,index)=>{
+        item.style.transitionDuration = "1500ms"
+        var de =  (current - index ) * 25
+        item.style.transform = `rotateX(${de}deg)`
+        if(current == index){
+            selectArea = item;
+        }
+       
+    })
+    regionList.style.transitionDuration = "1500ms";
+    regionList.style.transform = `translateY(${start}px) scale(1) translateZ(0px)`;
+    regionList.style.pointerEvents = "auto";
+    regionList.style.transitionTimingFunction = "cubic-bezier(0.23, 1, 0.32, 1)";
+    setTimeout(function() {
+        regionList.style.transitionDuration = "0ms";
+    }, 1500);
+}
+function remToPx(rem) {
+  var fontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return rem * fontSize;
+}
+function makeStartMultipleOfI(start, i) {
+  if (start % i !== 0) {
+    start = Math.round(start / i) * i;
+  }
+  return start;
+}
+function disableScroll() {
+  document.body.style.overflow = 'hidden';
+}
+
+// Enable scroll on the underlying layer
+function enableScroll() {
+  document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>

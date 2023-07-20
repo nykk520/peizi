@@ -1,0 +1,50 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" class="layui-input"  placeholder="请输入名称" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" class="layui-input"  placeholder="请输入标题" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">值</label>
+            <div class="layui-input-block">
+                <textarea name="value" rows="20" class="layui-textarea" placeholder="请输入值"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分组</label>
+            <div class="layui-input-block">
+                 <select name="groupid" lay-verify="required" data-select="{:url('config.group/index')}" data-fields="id,name" data-value="{$row.groupid|default=''}">
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                 <select name="type" lay-verify="required" lay-search="" data-select="{:url('config.attr/index')}" data-fields="id,name" data-value="{$row.type|default=''}">
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">说明</label>
+            <div class="layui-input-block">
+                <textarea name="content" rows="20" class="layui-textarea" placeholder="请输入说明"></textarea>
+                <tip>单选框示例值：1|单选1(一行一个)</tip>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>

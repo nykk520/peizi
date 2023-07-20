@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="配资指数-{:get_config('web_domain')},曝光非法配资平台,举报非法配资平台,最真实的配资评论,{$data.plateform}">
+  <meta name="description" content="配资指数曝光,配资指数-{:get_config('web_domain')},让非法配资平台无处藏身,最真实的配资评论">
+
+  <title>{$data.title}</title>
+  {include file="public/include"}
+
+</head>
+
+<body>
+  {include file="public/navs"}
+
+  <div class="ley-inner ley-content ley-clear" style="font-size: 0;">
+    <ul class="ley-crumbs">
+      <li><a class="ley-crumbs-item" href="/">首页</a> > </li>
+      <li><a class="ley-crumbs-item ley-crumbs-active" href="/{$model}">曝光</a> </li>
+    </ul>
+    <div class="page-left" style="padding-left: 48px; width: calc(67% - 48px);">
+		<div class="ley-panel">
+			<div class="ley-panel-bd">
+				<div class="article-box">
+					<div class="article-title"><div style="width: 90%;">{$data.title|default=''}</div>
+						<div class="article-msg">{$data.pub_time|default=''}&nbsp;&nbsp;</div>
+						<div class="reading-num">阅读数：{$data.num}</div>
+					</div>
+
+					<div class="ley-panel exposure-page-panel">
+						<div class="ley-panel-bd involve-plateform">
+							<strong>涉及平台：</strong><img style="display: inline-block;width: 28px;vertical-align: middle;" src="{$data.min_logo|default=''}" alt="">
+							<a target="_blank" style="color:rgb(249, 150, 59);display:inline-block;font-size:14px" href="javascript:;">{$data.plateform|default=''}</a>
+						</div>
+					</div>
+					
+						<div class="ley-panel exposure-page-panel">
+						<div class="ley-panel-hd">事件描述：</div>
+						<div class="ley-panel-bd">
+							{$data.content|default=''|raw|html_entity_decode}
+						</div>
+					</div>
+	
+	
+					
+										
+						<div class="ley-panel exposure-page-panel">
+						<div class="ley-panel-hd">后续报道：</div>
+						<div class="ley-panel-bd">
+							{$data.report|default=''|raw|html_entity_decode}
+						</div>
+					</div>
+					
+					<div class="ley-panel exposure-page-panel">
+						<div class="ley-panel-hd">总结：</div>
+						<div class="ley-panel-bd">
+							{$data.summary|default=''|raw|html_entity_decode}
+						</div>
+					</div>
+					
+					
+					<div class="ley-flex adjacent-link">
+						{if $pre}
+					        <a href="/warning/{$pre.id}.html" class="ley-ellipsis">上一篇：{$pre.title}</a>
+					    {else /}
+					        <a href="javascript:;" class="ley-ellipsis">上一篇：无</a>
+					    {/if}
+						{if $next}
+					       <a href="/warning/{$next.id}.html" class="ley-ellipsis">下一篇：{$next.title}</a>
+					    {else /}
+					        <a href="javascript:;" class="ley-ellipsis">下一篇：无</a>
+					    {/if}	
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+
+
+		
+	</div>
+
+
+  </div>
+  {include file="public/footer"}
+  <style type="text/css" media="all">
+      .article-box img{
+          width: 100%;
+      }
+  </style>
+</body>
+
+</html>

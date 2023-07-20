@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="keywords" content="{$data.title}{$data.website},{:get_status($data.pstatus)},配资指数数据-{:get_config('web_domain')},配资平台数据,配资平台数据,最真实的配资评论">
+<meta name="description" content="{$data.title}{$data.website}配资指数详情页,配资指数,{:get_config('web_domain')},配资平台数据,最真实的配资评论">
+<title>{$data.title} {$data.website} {:get_status($data.pstatus)} 配资指数数据-{:get_config('web_domain')},最真实的配资评论</title>
+{include file="public/include"}
+</head>
+
+<body>
+{include file="public/navs"}
+
+<!-- 网站主体 -->
+<div class="ley-inner ley-content ley-clear" style="width: 1000px;font-size: 0;">
+  <ul class="ley-crumbs">
+    <li><a class="ley-crumbs-item" href="/">首页</a> > </li>
+    <li><a class="ley-crumbs-item" href="/{$model}">数据</a> > </li>
+    <li><a class="ley-crumbs-item ley-crumbs-active" href="#">{$data.title}</a></li>
+  </ul>
+  <div class="page-left"> 
+    <!-- 基本信息 -->
+    <div class="ley-tab-card">
+      <div class="hd ley-flex">
+        <div class="hd-item ley-tab-card-active">平台信息</div>
+        <div class="hd-item">工商信息</div>
+        <div class="hd-item">备案信息</div>
+        <div class="hd-item">公司证件</div>
+        <div class="hd-item">相关图片</div>
+      </div>
+      <div class="bd" style="overflow: hidden;">
+        <div class="bd-item" style="display: block;">
+          <table class="ley-table table-detail">
+            <tbody>
+              <tr>
+                <td style="width: 20%;">平台LOGO</td>
+                <th style="width: 20%;">平台名称：</th>
+                <td>{$data.title}</td>
+              </tr>
+              <tr>
+                <td rowspan="7" style="position: relative;text-align: right;"><div class="platform-logo"> <a target="__blank" href="javascript:;"> <img alt="{$data.title}" src="{$data.logo}"> </a> </div>
+                  
+                  <!-- <div class="operate-state"></div> -->
+                  
+                  <div class="ley-btn-nobg follow-plateform ley-follow-active"
+										onclick="followPlateform(this, 1026)">关注</div></td>
+                <th>平台网址：</th>
+                <td><a style="color: #007aff;" target="_blank" href="/link.php?url={$data.website}">{$data.website}</a> <a class="ley-btn-nobg blank-link" target="_blank" href="/link.php?url={$data.website}">访问官网</a></td>
+              </tr>
+              <tr>
+                <th>其他网址：</th>
+                <td> {$data.other_website} </td>
+              </tr>
+              <tr>
+                <th>主营业务：</th>
+                <td>{$data.main_business}</td>
+              </tr>
+              <tr>
+                <th>所在地区：</th>
+                <td>{$data.province}/{$data.city}</td>
+              </tr>
+              <tr>
+                <th>办公地址：</th>
+                <td>{$data.office_address}</td>
+              </tr>
+              <tr>
+                <th>上线时间：</th>
+                <td>{$data.launch_date}</td>
+              </tr>
+              <tr>
+                <th>客服热线：</th>
+                <td>{$data.customer_service}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="seal seal{$data.pstatus}">{:get_status($data.pstatus)}</div>
+        </div>
+        <div class="bd-item">
+          <table class="ley-table table-detail">
+            <tbody>
+              <tr>
+                <th>公司名称：</th>
+                <td>{$data.company_name}</td>
+                <th>信用代码：</th>
+                <td>{$data.credit_code}</td>
+              </tr>
+              <tr>
+                <th>经营状态：</th>
+                <td>{$data.operating_status}</td>
+                <th>法人代表：</th>
+                <td>{$data.legal_representative}</td>
+              </tr>
+              <tr>
+                <th>公司类型：</th>
+                <td>{$data.company_type}</td>
+                <th>成立日期：</th>
+                <td>{$data.establishment_date}</td>
+              </tr>
+              <tr>
+                <th>注册资本：</th>
+                <td>{$data.registered_capital}</td>
+                <th>注册地址：</th>
+                <td>{$data.registered_address}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bd-item">
+          <table class="ley-table">
+            <tbody>
+              <tr>
+                <th>主办单位名称：</th>
+                <td>{$data.organizer_name}</td>
+                <th>网站名称：</th>
+                <td>{$data.website_name}</td>
+              </tr>
+              <tr>
+                <th>网站域名：</th>
+                <td>{$data.domain_name}</td>
+                <th>网站备案：</th>
+                <td>{$data.website_record}</td>
+              </tr>
+              <tr>
+                <th>主办单位性质：</th>
+                <td>{$data.organizer_type}</td>
+                <th>网站首页地址：</th>
+                <td>{$data.homepage_address}</td>
+              </tr>
+              <tr>
+                <th>网站负责人：</th>
+                <td>{$data.website_manager}</td>
+                <th>审核时间：</th>
+                <td>{$data.review_date}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bd-item">
+            {volist name="data['document_file']" id="vo"}
+            <img class="ley-preview" src="$vo" style="width: 100%; cursor: -webkit-zoom-in;" /> 
+    		{/volist}
+		</div>
+        <div class="bd-item"> 
+            {volist name="data['images']" id="vo"}
+            <img class="ley-preview" src="{$vo}" style="width: 24%; cursor: -webkit-zoom-in;" />
+            {/volist}
+       
+        </div>
+      </div>
+    </div>
+    <!-- 平台简介 -->
+    <div class="ley-panel panel-detail" id="plateform_describe">
+      <div class="ley-panel-hd">
+        <div class="ley-panel-title">平台简介</div>
+      </div>
+      <div class="ley-panel-bd">
+        {$data.description|default=''|raw|html_entity_decode}
+      </div>
+    </div>
+    <!-- 相关曝光 --> 
+    <!-- 融资信息 -->
+    <div class="ley-panel panel-detail">
+      <div class="ley-panel-hd">
+        <div class="ley-panel-title">融资信息</div>
+      </div>
+      <div class="ley-panel-bd">
+        {$data.financing_information|default=''|raw|html_entity_decode}
+      </div>
+    </div>
+    {if $data.summarize}
+    <div class="ley-panel panel-detail">
+      <div class="ley-panel-hd">
+        <div class="ley-panel-title">总结</div>
+      </div>
+      <div class="ley-panel-bd">
+        {$data.summarize|default=''|raw|html_entity_decode}
+      </div>
+    </div>
+    {/if}
+  </div>
+</div>
+
+{include file="public/footer"}
+</body>
+</html>

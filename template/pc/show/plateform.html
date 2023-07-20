@@ -1,0 +1,105 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="{$data.keywords}">
+  <meta name="description" content="{$data.description}">
+
+  <title>{$data.title}</title>
+  {include file="public/include"}
+</head>
+
+<body>
+  {include file="public/navs"}
+
+  <!-- 网站主体 -->
+  <div class="ley-inner ley-content">
+    <!-- 筛选项 -->
+    <div class="filter-nav">
+      <div class="filter-category">
+        <div class="filter-category-name">所在地区：</div>
+        <div class="filter-item-wrapper"> 
+            <a href="{:make_show_url('',$status)}" class="filter-item {if $province == ''}filter-active{/if}"> 全部 </a>
+            {Cshuo:province id="vo" key="key"}
+            {if $key <=14}
+            <a href="{:make_show_url($vo['name'],$status)}" class="filter-item{if $province == $vo['name']} filter-active{/if}">
+            {$vo.name}<span>{$vo.num}</span> </a> 
+            {else /}
+            <a href="{:make_show_url($vo['name'],$status)}" class="filter-item filter-provice-more{if $province == $vo.name} filter-active{/if}">
+            {$vo.name}<span>{$vo.num}</span> </a> 
+            {/if}
+            {/Cshuo:province}
+            <a class="filter-more">更多</a>
+        </div>
+      </div>
+      <div class="filter-category">
+        <div class="filter-category-name">经营状态：</div>
+        <div class="filter-item-wrapper">
+            <a href="{:make_show_url($province,'')}" class="filter-item {if $status == ''}filter-active{/if}"> 全部 </a>
+            {Cshuo:pstatus id="vo" key="key"}
+            <a href="{:make_show_url($province,$vo.status)}" class="filter-item {if $status == $vo.status}filter-active{/if}"> {$vo.name}({$vo.count}) </a> 
+            {/Cshuo:pstatus}
+           
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据表格 -->
+    <table class="ley-table index-table">
+      <tbody>
+        <tr>
+          <th>平台名称</th>
+          <th>LOGO</th>
+          <th>所在地区</th>
+          <th>股票/期货</th>
+          <th>安全性</th>
+          <th>资金成本</th>
+          <th>上线时间</th>
+          <th>状态</th>
+
+        </tr>
+        {Cshuo:plateform num="40" field="id,title,website,min_logo,province,city,class,safe,cost,launch_date,pstatus" province="'.$province.'" pstatus="'.$status.'" paging="yes" wd="'.$wd.'"}
+        <tr>
+          <td class="plateform-table-msg"><a href="/{$data.urls}/{$vo.id}.html" class="plateform-table-name">{$vo.title|default=''}
+            </a> <a href="link.php?url={$vo.website|default=''}" target="_blank" class="web-site">{$vo.website|default=''}</a></td>
+          <td><a class="plateform-table-logo" href="/{$data.urls}/{$vo.id}.html"> <img src="{$vo.min_logo|default=''}"> </a></td>
+          <td>{$vo.province|default=''}/{$vo.city|default=''}</td>
+          <td>{if $vo.class == 1}股票{else /}期货{/if}</td>
+          <td><div class="quality quality-{$vo.safe|default=''}"></div></td>
+          <td>{$vo.cost}</td>
+          <td>{$vo.launch_date}</td>
+          <td><div class="exponent  normal-color"> {:get_status($vo.pstatus)} </div></td>
+        </tr>
+        {/Cshuo:plateform}
+        
+      </tbody>
+    </table>
+    <div class="paging-wrapper">
+      <ul class="paging ley-clear" role="navigation">
+        {if $__PAGING__.record_total > 0}  
+        {if $__PAGING__.page_total > 1}  
+            {if $__PAGING__.page_current > 1}
+            <li class="pre-page">
+                <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_prev}" rel="prev" aria-label="&laquo; Previous">«</a>
+            </li>
+            {/if}
+            {foreach $__PAGING__.page_num as $num } 
+                {if $__PAGING__['page_current'] == $num}
+                <li class="paging-on" aria-current="page"><span>{$num}</span></li>
+                {else /}
+                 <li><a href="{$__PAGING__.page_url|xiaoyu_url_page=$num}">{$num}</a></li>
+                {/if}
+            {/foreach}
+            {if $__PAGING__.page_current < $__PAGING__.page_total}
+            <li class="next-page"> <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_next}" rel="next"
+                aria-label="Next »">»</a> </li>
+            {/if}
+        {/if}
+        {/if}
+      </ul>
+    </div>
+  </div>
+  {include file="public/footer"}
+</body>
+
+</html>

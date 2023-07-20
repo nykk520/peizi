@@ -1,0 +1,188 @@
+<html>
+<head>
+
+  <meta name="keywords" content="{$data.keywords}">
+  <meta name="description" content="{$data.description}">
+
+  <title>{$data.title}</title>
+{include file="public/include"}
+
+</head>
+
+<body>
+{include file="public/navs"}
+<div class="ley-inner ley-content ley-clear" style="font-size: 0;">
+	<ul class="ley-crumbs">
+		<li><a class="ley-crumbs-item" href="/">首页</a> > </li>
+		<li><a class="ley-crumbs-item ley-crumbs-active" href="/{$data.urls}">曝光</a> </li>
+	</ul>
+	<div class="ley-panel">
+	    <form action="" id="warn-form" method="post" accept-charset="utf-8">
+	        <div class="warn-form">
+                <span class="warn-form-label">曝光网址:</span>
+                <input class="warn-form-input" type="text" name="website" id="website" />
+                <span class="error-msg2"></span>
+                <span class="warn-form-label">曝光平台:</span>
+                <input class="warn-form-input" type="text" name="name" id="name"/>
+                <span class="error-msg2"></span>
+	        </div>
+	        <div class="warn-form">
+	          
+                <div class="warn-form-label">曝光理由:</div>	    
+                <input type="text" class="ley-input" name="reason" id="reason"/>
+                <span class="error-msg2"></span>
+                <div class="warn-form-label">事件描述:</div>
+                <textarea class="ley-textarea" name="description" id="description"></textarea>
+                <span class="error-msg2"></span>
+	        </div>
+            <input type="submit" class="ley-input ley-radius ley-submit" id="warnbtn" value="提交" />
+            
+	    </form>
+        
+	</div>
+	<div class="page-left">
+		<div class="ley-panel">
+			<div class="ley-panel-bd">
+				<ul class="exposure-list">
+				    {Cshuo:warn num="40" paging="yes" id="vo"}
+				    
+						<li class="exposure-item">
+							<img class="exposure-list-img" src="{$vo.logo|default=''}" alt="联华证券">
+						
+    						<div class="flex-box">
+    							<a href="/{$data.urls}/{$vo.id}.html">{$vo.title|default=''}</a>
+    							<span class="has_pic">（有图）</span>
+    					    </div>
+    
+    						<div class="exposure-time">{$vo.pub_time|default=''}</div>
+    						<div class="exposure-list-icon">
+    							<div class="views">{$vo.num}</div>
+    						</div>
+					    </li>
+                    {/Cshuo:warn}					
+
+				</ul>
+
+	<div class="paging-wrapper">
+      <ul class="paging ley-clear" role="navigation">
+        {if $__PAGING__.record_total > 0}  
+        {if $__PAGING__.page_total > 1}  
+            {if $__PAGING__.page_current > 1}
+            <li class="pre-page">
+                <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_prev}" rel="prev" aria-label="&laquo; Previous">«</a>
+            </li>
+            {/if}
+            {foreach $__PAGING__.page_num as $num } 
+                {if $__PAGING__['page_current'] == $num}
+                <li class="paging-on" aria-current="page"><span>{$num}</span></li>
+                {else /}
+                 <li><a href="{$__PAGING__.page_url|xiaoyu_url_page=$num}">{$num}</a></li>
+                {/if}
+            {/foreach}
+            {if $__PAGING__.page_current < $__PAGING__.page_total}
+            <li class="next-page"> <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_next}" rel="next"
+                aria-label="Next »">»</a> </li>
+            {/if}
+        {/if}
+        {/if}
+      </ul>
+    </div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{include file="public/footer"}
+<style type="text/css" media="all">
+    .warn-form{
+        padding: 5px;
+        line-height: 50px;
+        
+    }
+    .warn-form-label{
+        font-size:15px;
+        padding: 3px;
+    }
+    .warn-form-input{
+        border: 1px solid  #0066ff;
+        border-radius: 6px;
+        padding: 3px 3px 3px 5px;
+        font-size: 14px;
+    }
+    .error-msg2{
+        font-size: 12px;
+        color: red;
+    }
+</style>
+
+<script type="text/javascript" charset="utf-8">
+    $("#warnbtn").click(function(event){
+        event.preventDefault();
+        var website = $("#website");
+        var name = $("#name");
+        var reason = $("#reason");
+        var description = $("#description");
+        if (!website.val().trim()) {
+			website.next().text('平台网址不能为空');
+			return false;
+            
+        } else  if (!(/^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*$/.test(website.val()))) {
+			website.next().text('网址格式错误');
+			return false;
+            
+        } else if (!name.val().trim()) {
+			name.next().text('平台名称不能为空');
+			return false;
+            
+        }else if (!reason.val().trim()) {
+			reason.next().text('曝光理由不能为空');
+			return false;
+            
+        }else if (!description.val().trim()) {
+			description.next().text('描述不能为空');
+			return false;
+            
+        }
+        
+        
+        $.ajax({
+			type: 'post',
+			url: "/feedback/warn",
+			data: $('#warn-form').serialize(),
+			async: false,
+			success (ret) {
+			    console.log(ret)
+				$(this).leyAlert({
+					type: 'success',
+					content: '提交成功'
+				});
+				website.val('');
+				name.val('');
+				description.val('');
+				reason.val('');
+				
+			},
+			error(ret){
+				var errors = ret.responseJSON.errors
+				var errorMsg = ''
+				for (var key in errors) {
+					if (errors.hasOwnProperty(key)) {
+						var element = errors[key];
+						errorMsg += element[0] + '<br \><br \>'
+					}
+				}
+				// $(this).leyAlert({
+				// 	type: 'error',
+				// 	content: errorMsg
+				// });
+			}
+		});
+
+		return false;
+    });
+    
+</script>
+</body>
+</html>

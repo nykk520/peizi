@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="{$data.keywords}">
+  <meta name="description" content="{$data.description}">
+
+  <title>{$data.title}</title>
+  {include file="public/include"}
+
+</head>
+
+<body>
+  {include file="public/navs"}
+
+  <div class="ley-inner ley-content ley-clear" style="font-size: 0;">
+    <ul class="ley-crumbs">
+      <li><a class="ley-crumbs-item" href="/">首页</a> > </li>
+      <li><a class="ley-crumbs-item ley-crumbs-active" href="/news">新闻</a> </li>
+    </ul>
+    <div class="page-left" >
+		<div class="ley-panel">
+			<div class="ley-panel-bd">
+				<div class="article-box">
+					<div class="article-title"><div style="width: 90%;">{$data.title}</div>
+						<div class="article-msg">{$data.pub_time|default=''}</div>
+						<div class="reading-num">阅读数：{$data.num}</div>
+					</div>
+                  
+					
+					<div class="ley-panel exposure-page-panel">
+					
+						<div class="ley-panel-bd">
+							{$data.content|default=''|raw|html_entity_decode}
+						</div>
+					</div>
+					
+					
+									
+					
+					<div class="ley-flex adjacent-link">
+					    {if $pre}
+					        <a href="/news/{$pre.id}.html" class="ley-ellipsis">上一篇：{$pre.title}</a>
+					    {else /}
+					        <a href="javascript:;" class="ley-ellipsis">上一篇：无</a>
+					    {/if}
+						{if $next}
+					       <a href="/news/{$next.id}.html" class="ley-ellipsis">下一篇：{$next.title}</a>
+					    {else /}
+					        <a href="javascript:;" class="ley-ellipsis">下一篇：无</a>
+					    {/if}	
+							
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+
+  </div>
+  {include file="public/footer"}
+  <style type="text/css" media="all">
+      .article-box img{
+          width: 100%;
+      }
+  </style>
+</body>
+
+</html>

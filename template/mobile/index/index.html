@@ -1,0 +1,148 @@
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>{:get_config('web_title')}</title>
+<meta name="description" content="{:get_config('web_description')}" />
+<meta name="keywords" content="{:get_config('web_keywords')}" />
+{include file="public/include"}
+</head>
+<body class="">
+  
+  
+<div id="app">
+<div class="head-bg">
+        <div class="head-box">
+            <div class="head-logo">
+                    <a href="/">
+                        <img class="logo" src="{:get_config('web_logo')}">
+                    </a>
+                    <div style="width:30px;height:30px;margin-right:25px;"><a href="{:get_config('web_kefu')}"> <img class="logo" src="/static/mobile/img/kefu.png" style="width:100%;"></a></div>
+            </div>
+        </div>
+    </div>
+  <div class="home-page my-router" style="animation-duration: 0s;">
+    <div class="cube-scroll-wrapper my-scroll-wrapper" style="height: 844px;">
+      <div class="cube-scroll-content" style="transition-duration: 0ms; transform: translate(0px, 0px) scale(1) translateZ(0px); transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);">
+        <div class="cube-scroll-list-wrapper" style="min-height: 845px; pointer-events: auto;">
+          <div class="banner-box">
+            <div class="banner-title">已收录配资平台<strong>{:count_plateform()}</strong>家</div>
+            <div class="cube-input search-input">
+              <input type="text" id="search-input" placeholder="请输入平台名称、网址、公司、等等" class="cube-input-field">
+              <input type="hidden"  id="search-url" value="/{$plateform}" />
+            </div>
+            <div class="search-button">搜索</div>
+          </div>
+          
+          <div class="company-nav">
+            <ul>
+            <li class="tab-link active" data-tab="tab1">全部</li>
+            <li class="tab-link" data-tab="tab2">正常</li>
+            <li class="tab-link" data-tab="tab3">问题</li>
+            <li class="tab-link" data-tab="tab4">停业</li>
+        </ul>
+        </div>
+        
+          <ul id="tab1" class="home-ul home-ul-active">
+             {Cshuo:plateform num="40" field="id,title,website,min_logo,province,city,class,safe,cost,launch_date,pstatus" pstatus="0"}
+            <li class="platform-item border-bottom-1px">
+              <div class="platform-name"><a href="/{$plateform}/{$vo.id}.html" style="color: #275592;">{$vo.title|default=''}</a></div>
+              <div class="platform-site"><a href="/link.php?url={$vo.website|default=''}" style="color: #343a41;">{$vo.website|default=''}</a></div>
+              <ul class="platform-msg">
+                <li>{if $vo.class == 1}股票{else /}期货{/if}</li>
+                {if $vo.cost}
+                <li>{$vo.cost}</li>
+                {/if}
+                {if $vo.province}
+                <li>{$vo.province|default=''}/{$vo.city|default=''}</li>
+                {/if}
+              </ul>
+              <div class="platform-picture"><a href="/{$plateform}/{$vo.id}.html"><img src="{$vo.min_logo|default=''}" alt=""></a></div>
+              <!---->
+              <div class="score special-score status{$vo.pstatus}" >{:get_status($vo.pstatus)}</div>
+              <div class="label"></div>
+            </li>
+             {/Cshuo:plateform}
+        
+          </ul>
+          <ul id="tab2" class="home-ul">
+             {Cshuo:plateform num="40" field="id,title,website,min_logo,province,city,class,safe,cost,launch_date,pstatus" pstatus="1"}
+            <li class="platform-item border-bottom-1px">
+              <div class="platform-name"><a href="/{$plateform}/{$vo.id}.html" style="color: #275592;">{$vo.title|default=''}</a></div>
+              <div class="platform-site"><a href="/link.php?url={$vo.website|default=''}" style="color: #343a41;">{$vo.website|default=''}</a></div>
+              <ul class="platform-msg">
+                <li>{if $vo.class == 1}股票{else /}期货{/if}</li>
+                {if $vo.cost}
+                <li>{$vo.cost}</li>
+                {/if}
+                {if $vo.province}
+                <li>{$vo.province|default=''}/{$vo.city|default=''}</li>
+                {/if}
+              </ul>
+              <div class="platform-picture"><a href="/{$plateform}/{$vo.id}.html"><img src="{$vo.min_logo|default=''}" alt=""></a></div>
+              <!---->
+              <div class="score special-score status{$vo.pstatus}" >{:get_status($vo.pstatus)}</div>
+              <div class="label"></div>
+            </li>
+             {/Cshuo:plateform}
+            
+        
+          </ul>
+          <ul id="tab3" class="home-ul">
+            {Cshuo:plateform num="40" field="id,title,website,min_logo,province,city,class,safe,cost,launch_date,pstatus" pstatus="2"}
+            <li class="platform-item border-bottom-1px">
+              <div class="platform-name"><a href="/{$plateform}/{$vo.id}.html" style="color: #275592;">{$vo.title|default=''}</a></div>
+              <div class="platform-site"><a href="/link.php?url={$vo.website|default=''}" style="color: #343a41;">{$vo.website|default=''}</a></div>
+              <ul class="platform-msg">
+                <li>{if $vo.class == 1}股票{else /}期货{/if}</li>
+                {if $vo.cost}
+                <li>{$vo.cost}</li>
+                {/if}
+                {if $vo.province}
+                <li>{$vo.province|default=''}/{$vo.city|default=''}</li>
+                {/if}
+              </ul>
+              <div class="platform-picture"><a href="/{$plateform}/{$vo.id}.html"><img src="{$vo.min_logo|default=''}" alt=""></a></div>
+              <!---->
+              <div class="score special-score status{$vo.pstatus}" >{:get_status($vo.pstatus)}</div>
+              <div class="label"></div>
+            </li>
+             {/Cshuo:plateform}
+            
+        
+          </ul>
+          <ul id="tab4" class="home-ul">
+             {Cshuo:plateform num="40" field="id,title,website,min_logo,province,city,class,safe,cost,launch_date,pstatus" pstatus="3"}
+            <li class="platform-item border-bottom-1px">
+              <div class="platform-name"><a href="/{$plateform}/{$vo.id}.html" style="color: #275592;">{$vo.title|default=''}</a></div>
+              <div class="platform-site"><a href="/link.php?url={$vo.website|default=''}" style="color: #343a41;">{$vo.website|default=''}</a></div>
+              <ul class="platform-msg">
+                <li>{if $vo.class == 1}股票{else /}期货{/if}</li>
+                {if $vo.cost}
+                <li>{$vo.cost}</li>
+                {/if}
+                {if $vo.province}
+                <li>{$vo.province|default=''}/{$vo.city|default=''}</li>
+                {/if}
+              </ul>
+              <div class="platform-picture"><a href="/{$plateform}/{$vo.id}.html"><img src="{$vo.min_logo|default=''}" alt=""></a></div>
+              <!---->
+              <div class="score special-score status{$vo.pstatus}" >{:get_status($vo.pstatus)}</div>
+              <div class="label"></div>
+            </li>
+             {/Cshuo:plateform}
+          </ul>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+  <!---->
+  {include file="public/navs"}
+</div>
+
+<script src="/static/mobile/js/index.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

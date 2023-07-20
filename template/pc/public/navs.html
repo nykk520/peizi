@@ -1,0 +1,14 @@
+<!-- 网站头部 -->
+<div class="nav-box ley-shadow">
+  <div class="nav-wrapper ley-inner">
+    <div class="company-logo"><a href="/"><img src="{:get_config('web_logo')}" alt=""></a></div>
+    <ul class="ley-nav ley-clear" style="flex: 1;">
+      <li class="ley-nav-item"> <a class="ley-hvr-underline{if request()->baseUrl() == '/'} ley-nav-active{/if}" href="/">首页</a> </li>
+      {Cshuo:navs id="vo" key="key"}
+      <li class="ley-nav-item"> <a class="ley-hvr-underline{if $table == $vo['model']} ley-nav-active{/if}" href="/{$vo.urls}">{$vo.name}</a></li>
+      {/Cshuo:navs}
+     
+    </ul>
+    <div class="search-form"> </div>
+  </div>
+</div>

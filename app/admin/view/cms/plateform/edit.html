@@ -1,0 +1,302 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+    <div class="layuimini-main" id="app">
+        
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">平台信息</li>
+                <li>工商信息</li>
+                <li>备案信息</li>
+                <li>公司证件</li>
+                <li>相关图片</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">平台名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" class="layui-input"  placeholder="请输入平台名称" value="{$row.title|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">平台状态</label>
+                        <div class="layui-input-block">
+                            <select name="pstatus">
+                                <option value="1"{if $row.pstatus==1}selected{/if}>正常</option>
+                                <option value="2"{if $row.pstatus==2}selected{/if}>异常</option>
+                                <option value="3"{if $row.pstatus==3}selected{/if}>停业</option>
+                                <option value="4"{if $row.pstatus==4}selected{/if}>失联</option>
+                            </select>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">平台logo</label>
+                        <div class="layui-input-block layuimini-upload">
+                            <input name="logo" class="layui-input layui-col-xs6"   placeholder="请上传平台logo" value="{$row.logo|default=''}">
+                            <div class="layuimini-upload-btn">
+                                <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                                <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">平台小logo</label>
+                        <div class="layui-input-block layuimini-upload">
+                            <input name="min_logo" class="layui-input layui-col-xs6"   placeholder="请上传平台平台小logo" value="{$row.min_logo|default=''}">
+                            <div class="layuimini-upload-btn">
+                                <span><a class="layui-btn" data-upload="min_logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                                <span><a class="layui-btn layui-btn-normal" id="select_min_logo" data-upload-select="min_logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">期货/股票</label>
+                        <div class="layui-input-block">
+                             <select name="class">
+                                <option value="1"{if $row.class==1}selected{/if}>期货</option>
+                                <option value="2"{if $row.class==2}selected{/if}>股票</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">安全性</label>
+                        <div class="layui-input-block">
+                             <select name="safe">
+                                <option value="1"{if $row.safe==1}selected{/if}>1星</option>
+                                <option value="2"{if $row.safe==2}selected{/if}>2星</option>
+                                <option value="3"{if $row.safe==3}selected{/if}>3星</option>
+                                <option value="4"{if $row.safe==4}selected{/if}>4星</option>
+                                <option value="5"{if $row.safe==4}selected{/if}>5星</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="layui-form-item">
+                        <label class="layui-form-label">资金成本</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cost" class="layui-input"  placeholder="资金成本" value="{$row.cost|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="website" class="layui-input"  placeholder="请输入网址" value="{$row.website|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">其他网址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="other_website" class="layui-input"  placeholder="请输入其他网址" value="{$row.other_website|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主营业务</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="main_business" class="layui-input"  placeholder="请输入主营业务" value="{$row.main_business|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">省</label>
+                        <div class="layui-input-block">
+                            <select name="province" id="province" lay-filter="province">
+                                {volist name=":get_province()" id="vo"}
+                                <option value="{$vo.name}" {if $row.province == $vo.name}selected{/if} data-id="{$vo.id}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">市</label>
+                        <div class="layui-input-block">
+                            <select name="city" id="city" lay-filter="city">
+                                {volist name=":get_city($row['province'])" id="vo"}
+                                    <option value="{$vo.name}" {if $row.city == $vo.name}selected{/if}>{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">办公地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="office_address" class="layui-input"  placeholder="请输入办公地址" value="{$row.office_address|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上线时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="launch_date" class="layui-input"  placeholder="请输入上线时间" value="{$row.launch_date|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">客服热线</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="customer_service" class="layui-input"  placeholder="请输入客服热线" value="{$row.customer_service|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">平台简介</label>
+                        <div class="layui-input-block">
+                            <textarea name="description" rows="20" class="layui-textarea editor" placeholder="请输入平台简介">{$row.description|raw}</textarea>
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item">-->
+                    <!--    <label class="layui-form-label">相关曝光</label>-->
+                    <!--    <div class="layui-input-block">-->
+                    <!--        <textarea name="warn_ids" rows="20" class="layui-textarea editor" placeholder="请输入相关曝光">{$row.warn_ids|raw}</textarea>-->
+                    <!--    </div>-->
+                    <!--</div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">融资信息</label>
+                        <div class="layui-input-block">
+                             <textarea name="financing_information" rows="20" class="layui-textarea editor" placeholder="请输入融资信息">{$row.financing_information|raw}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">总结</label>
+                        <div class="layui-input-block">
+                            <textarea name="summarize" rows="20" class="layui-textarea editor" placeholder="请输入总结">{$row.summarize|raw}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">公司名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="company_name" class="layui-input"  placeholder="请输入公司名称" value="{$row.company_name|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">信用代码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="credit_code" class="layui-input"  placeholder="请输入信用代码" value="{$row.credit_code|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">经营状态</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="operating_status" class="layui-input"  placeholder="请输入经营状态" value="{$row.operating_status|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">法人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="legal_representative" class="layui-input"  placeholder="请输入法人" value="{$row.legal_representative|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">公司类型</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="company_type" class="layui-input"  placeholder="请输入公司类型" value="{$row.company_type|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">成立日期</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="establishment_date" class="layui-input"  placeholder="请输入成立日期" value="{$row.establishment_date|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">注册资本</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="registered_capital" class="layui-input"  placeholder="请输入注册资本" value="{$row.registered_capital|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">注册地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="registered_address" class="layui-input"  placeholder="请输入注册地址" value="{$row.registered_address|default=''}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主办单位</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="organizer_name" class="layui-input"  placeholder="请输入主办单位" value="{$row.organizer_name|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="website_name" class="layui-input"  placeholder="请输入网站名称" value="{$row.website_name|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站域名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="domain_name" class="layui-input"  placeholder="请输入网站域名" value="{$row.domain_name|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站备案</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="website_record" class="layui-input"  placeholder="请输入网站备案" value="{$row.website_record|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主办单位性质</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="organizer_type" class="layui-input"  placeholder="请输入主办单位性质" value="{$row.organizer_type|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">首页地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="homepage_address" class="layui-input"  placeholder="请输入首页地址" value="{$row.homepage_address|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">负责人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="website_manager" class="layui-input"  placeholder="请输入负责人" value="{$row.website_manager|default=''}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">审核时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="review_date" class="layui-input"  placeholder="请输入审核时间" value="{$row.review_date|default=''}">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                     <div class="layui-form-item">
+                        <label class="layui-form-label required">公司证件</label>
+                        <div class="layui-input-block layuimini-upload">
+                            <input name="document_file" class="layui-input layui-col-xs6" placeholder="请上传公司证件" value="{$row.document_file}">
+                            <div class="layuimini-upload-btn">
+                                <span><a class="layui-btn" data-upload="document_file" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                                <span><a class="layui-btn layui-btn-normal" id="select_images" data-upload-select="document_file" data-upload-number="more" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="layui-tab-item">
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">相关图片</label>
+                        <div class="layui-input-block layuimini-upload">
+                            <input name="images" class="layui-input layui-col-xs6" placeholder="请上传相关图片" value="{$row.images|default=''}">
+                            <div class="layuimini-upload-btn">
+                                <span><a class="layui-btn" data-upload="images" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                                <span><a class="layui-btn layui-btn-normal" id="select_images" data-upload-select="images" data-upload-number="more" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </form>
+</div>
+

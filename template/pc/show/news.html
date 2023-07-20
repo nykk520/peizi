@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+<head>
+
+  <meta name="keywords" content="{$data.keywords}">
+  <meta name="description" content="{$data.description}">
+
+  <title>{$data.title}</title>
+  {include file="public/include"}
+
+</head>
+
+<body>
+  {include file="public/navs"}
+
+  <div class="ley-inner ley-content ley-clear" style="font-size: 0;">
+    <ul class="ley-crumbs">
+      <li><a class="ley-crumbs-item" href="/">首页</a> > </li>
+      <li><a class="ley-crumbs-item ley-crumbs-active" href="/{$data.urls}">新闻</a> </li>
+    </ul>
+    <div class="page-left">
+      <div class="ley-panel">
+        <div class="ley-panel-bd">
+          <ul class="exposure-list">
+            {Cshuo:news num="40"  paging="yes" id="vo"}  
+            <li class="exposure-item">
+              <img class="exposure-list-img" src="{$vo.pic|default=''}"
+                alt="联华证券">
+
+              <!-- flex布局 -->
+              <div class="flex-box">
+                <a href="/{$data.urls}/{$vo.id}.html">
+                  {$vo.title|default=''}
+                </a>
+              </div>
+
+              <div class="exposure-time">{$vo.pub_time|default=""}</div>
+              <div class="exposure-list-icon">
+                <div class="views">{$vo.num}</div>
+              </div>
+            </li>
+            {/Cshuo:news}
+
+            
+
+
+          </ul>
+
+          <div class="paging-wrapper">
+            <ul class="paging ley-clear" role="navigation">
+             {if $__PAGING__.record_total > 0}  
+        {if $__PAGING__.page_total > 1}  
+            {if $__PAGING__.page_current > 1}
+            <li class="pre-page">
+                <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_prev}" rel="prev" aria-label="&laquo; Previous">«</a>
+            </li>
+            {/if}
+            {foreach $__PAGING__.page_num as $num } 
+                {if $__PAGING__['page_current'] == $num}
+                <li class="paging-on" aria-current="page"><span>{$num}</span></li>
+                {else /}
+                 <li><a href="{$__PAGING__.page_url|xiaoyu_url_page=$num}">{$num}</a></li>
+                {/if}
+            {/foreach}
+            {if $__PAGING__.page_current < $__PAGING__.page_total}
+            <li class="next-page"> <a href="{$__PAGING__.page_url|xiaoyu_url_page=$__PAGING__.page_next}" rel="next"
+                aria-label="Next »">»</a> </li>
+            {/if}
+        {/if}
+        {/if}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  {include file="public/footer"}
+
+</body>
+
+</html>

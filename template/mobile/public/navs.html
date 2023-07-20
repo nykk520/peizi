@@ -1,0 +1,17 @@
+<nav class="my-bar border-top-1px">
+    <div class="my-bar-item">
+        <a href="/" aria-current="page" class="{if request()->baseUrl() == '/'}my-active{/if}">
+            <span class="bottom-icon svg-icon iconfont icon-shouye"></span>
+            <span class="my-tab-label">首页</span>
+        </a>
+    </div>
+    {Cshuo:navs id="vo" key="key"}
+    <div class="my-bar-item">
+        <a href="/{$vo.urls}" aria-current="page" class="{if $table == $vo['model']}my-active{/if}">
+            <span class="bottom-icon svg-icon iconfont {$vo.iconfont}"></span>
+            <span class="my-tab-label">{$vo.wap_name}</span>
+        </a>
+    </div>
+  {/Cshuo:navs}
+ 
+</nav>
